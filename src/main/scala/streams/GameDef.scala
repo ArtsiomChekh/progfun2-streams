@@ -15,16 +15,16 @@ trait GameDef:
    *
    * Illustration:
    *
-   *     0 1 2 3   <- col axis
-   *   0 o o o o
-   *   1 o o o o
-   *   2 o # o o    # is at position Pos(2, 1)
-   *   3 o o o o
+   * 0 1 2 3   <- col axis
+   * 0 o o o o
+   * 1 o o o o
+   * 2 o # o o    # is at position Pos(2, 1)
+   * 3 o o o o
    *
-   *   ^
-   *   |
+   * ^
+   * |
    *
-   *   row axis
+   * row axis
    */
   case class Pos(row: Int, col: Int):
     /** The position obtained by changing the `row` coordinate by `d` */
@@ -75,8 +75,8 @@ trait GameDef:
    * This function returns the block at the start position of
    * the game.
    */
-  def startBlock: Block = ???
-
+  def startBlock: Block =
+    Block(startPos, startPos)
 
   /**
    * A block is represented by the position of the two cubes that
@@ -102,24 +102,24 @@ trait GameDef:
 
 
     /** The block obtained by moving left */
-    def left = if isStanding then             deltaCol(-2, -1)
-               else if b1.row == b2.row then  deltaCol(-1, -2)
-               else                        deltaCol(-1, -1)
+    def left = if isStanding then deltaCol(-2, -1)
+    else if b1.row == b2.row then deltaCol(-1, -2)
+    else deltaCol(-1, -1)
 
     /** The block obtained by moving right */
-    def right = if isStanding then            deltaCol(1, 2)
-                else if b1.row == b2.row then deltaCol(2, 1)
-                else                       deltaCol(1, 1)
+    def right = if isStanding then deltaCol(1, 2)
+    else if b1.row == b2.row then deltaCol(2, 1)
+    else deltaCol(1, 1)
 
     /** The block obtained by moving up */
-    def up = if isStanding then               deltaRow(-2, -1)
-             else if b1.row == b2.row then    deltaRow(-1, -1)
-             else                          deltaRow(-1, -2)
+    def up = if isStanding then deltaRow(-2, -1)
+    else if b1.row == b2.row then deltaRow(-1, -1)
+    else deltaRow(-1, -2)
 
     /** The block obtained by moving down */
-    def down = if isStanding then             deltaRow(1, 2)
-               else if b1.row == b2.row then  deltaRow(1, 1)
-               else                        deltaRow(2, 1)
+    def down = if isStanding then deltaRow(1, 2)
+    else if b1.row == b2.row then deltaRow(1, 1)
+    else deltaRow(2, 1)
 
 
     /**
@@ -137,9 +137,11 @@ trait GameDef:
     /**
      * Returns `true` if the block is standing.
      */
-    def isStanding: Boolean = ???
+    def isStanding: Boolean =
+      b1.row == b2.row && b1.col == b2.col
 
     /**
      * Returns `true` if the block is entirely inside the terrain.
      */
-    def isLegal: Boolean = ???
+    def isLegal: Boolean =
+      terrain(b1) == terrain(b2)

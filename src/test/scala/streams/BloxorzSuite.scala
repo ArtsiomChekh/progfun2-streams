@@ -1,6 +1,7 @@
 package streams
 
 import Bloxorz.*
+import org.junit.Assert.{assertFalse, assertTrue}
 
 class BloxorzSuite extends munit.FunSuite:
   trait SolutionChecker extends GameDef with Solver with StringParserTerrain:
@@ -64,6 +65,7 @@ class BloxorzSuite extends munit.FunSuite:
       assertEquals(startPos, Pos(1, 1))
       assertEquals(goal, Pos(4, 7))
   }
+
   test("find char testLevel1 (10pts)") {
     new Level1:
       assertEquals(findChar('o', testLevel1), Pos(1, 0))
@@ -71,6 +73,7 @@ class BloxorzSuite extends munit.FunSuite:
       assertEquals(findChar('S', testLevel1), Pos(0, 0))
       assertEquals(findChar('T', testLevel1), Pos(0, 1))
   }
+
 
   test("optimal solution for level 1 (5pts)") {
     new Level1:
@@ -83,6 +86,21 @@ class BloxorzSuite extends munit.FunSuite:
       assertEquals(solution.length, optsolution.length)
   }
 
+  test("Block.isStanding") {
+    new Level1:
+      val b1 = Block(Pos(0, 0), Pos(0, 0))
+      val b2 = Block(Pos(0, 0), Pos(0, 1))
+      assertTrue(b1.isStanding)
+      assertFalse(b2.isStanding)
+  }
+
+  test("Block.isLegal") {
+    new Level1:
+      val b1 = Block(Pos(0, 0), Pos(0, 0))
+      val b2 = Block(Pos(0, 0), Pos(0, 3))
+      assertTrue(b1.isLegal)
+      assertFalse(b2.isLegal)
+  }
 
   import scala.concurrent.duration.*
 
