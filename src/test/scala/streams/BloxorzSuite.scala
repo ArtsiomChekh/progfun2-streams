@@ -109,6 +109,14 @@ class BloxorzSuite extends munit.FunSuite:
       assertFalse(b2.isLegal)
   }
 
+  test("Block.startBlock") {
+    new Level1:
+      val pos1 = Pos(1, 1)
+      val pos2 = Pos(1, 1)
+      val b = Block(pos1, pos2)
+      assertTrue(startBlock == b)
+  }
+
   import scala.concurrent.duration.*
 
   override val munitTimeout = 10.seconds
