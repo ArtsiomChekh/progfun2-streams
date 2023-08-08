@@ -1,6 +1,7 @@
 package streams
 
 import Bloxorz.*
+import org.junit.Assert
 import org.junit.Assert.{assertFalse, assertTrue}
 
 class BloxorzSuite extends munit.FunSuite:
@@ -58,6 +59,12 @@ class BloxorzSuite extends munit.FunSuite:
       assert(!terrain(Pos(4, 11)), "4,11")
       assert(!terrain(Pos(-1, 0)), "-1,0")
       assert(!terrain(Pos(0, -1)), "0,-1")
+  }
+
+  test("terrain function testLevel1 (10pts)") {
+    new Level1:
+      assertTrue(terrainFunction(testLevel1)(Pos(1,1)))
+      assertFalse(terrainFunction(testLevel1)(Pos(1,3)))
   }
 
   test("find char level 1 (10pts)") {
