@@ -27,7 +27,8 @@ trait Solver extends GameDef:
    * It should only return valid neighbors, i.e. block positions
    * that are inside the terrain.
    */
-  def neighborsWithHistory(b: Block, history: List[Move]): LazyList[(Block, List[Move])] = ???
+  def neighborsWithHistory(b: Block, history: List[Move]): LazyList[(Block, List[Move])] =
+    b.legalNeighbors.map(x => (x._1, x._2 :: history)).to(LazyList)
 
   /**
    * This function returns the list of neighbors without the block
@@ -35,7 +36,8 @@ trait Solver extends GameDef:
    * make sure that we don't explore circular paths.
    */
   def newNeighborsOnly(neighbors: LazyList[(Block, List[Move])],
-                       explored: Set[Block]): LazyList[(Block, List[Move])] = ???
+                       explored: Set[Block]): LazyList[(Block, List[Move])] =
+    neighbors.filter(x => !explored.contains(x._1))
 
   /**
    * The function `from` returns the lazy list of all possible paths
