@@ -63,7 +63,6 @@ trait GameDef:
    */
   def terrain: Terrain
 
-
   /**
    * In Bloxorz, we can move left, right, Up or down.
    * These moves are encoded as case objects.
@@ -126,13 +125,14 @@ trait GameDef:
      * Returns the list of blocks that can be obtained by moving
      * the current block, together with the corresponding move.
      */
-    def neighbors: List[(Block, Move)] = ???
+    def neighbors: List[(Block, Move)] =
+      List((left, Move.Left), (right, Move.Right), (up, Move.Up), (down, Move.Down))
 
     /**
      * Returns the list of positions reachable from the current block
      * which are inside the terrain.
      */
-    def legalNeighbors: List[(Block, Move)] = ???
+    def legalNeighbors: List[(Block, Move)] = neighbors.filter(_._1.isLegal)
 
     /**
      * Returns `true` if the block is standing.

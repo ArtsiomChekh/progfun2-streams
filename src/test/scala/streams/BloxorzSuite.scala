@@ -63,8 +63,8 @@ class BloxorzSuite extends munit.FunSuite:
 
   test("terrain function testLevel1 (10pts)") {
     new Level1:
-      assertTrue(terrainFunction(testLevel1)(Pos(1,1)))
-      assertFalse(terrainFunction(testLevel1)(Pos(1,3)))
+      assertTrue(terrainFunction(testLevel1)(Pos(1, 1)))
+      assertFalse(terrainFunction(testLevel1)(Pos(1, 3)))
   }
 
   test("find char level 1 (10pts)") {
@@ -115,6 +115,27 @@ class BloxorzSuite extends munit.FunSuite:
       val pos2 = Pos(1, 1)
       val b = Block(pos1, pos2)
       assertTrue(startBlock == b)
+  }
+
+  test("Block.neghbors") {
+    new Level1:
+      val b = Block(Pos(0, 0), Pos(0, 0))
+      assertEquals(b.neighbors.length, 4)
+  }
+
+  test("Block.legalNeghbors") {
+    new Level1:
+      val b = Block(Pos(1, 1), Pos(1, 1))
+      assertEquals(b.legalNeighbors,
+        List((Block(Pos(1, 2), Pos(1, 3)), Move.Right), (Block(Pos(2, 1), Pos(3, 1)), Move.Down)))
+  }
+
+  test("Solver.done") {
+    new Level1:
+      val b1 = Block(Pos(4, 7), Pos(4, 7))
+      val b2 = Block(Pos(4, 6), Pos(4, 6))
+      assert(done(b1))
+      assert(!done(b2))
   }
 
   import scala.concurrent.duration.*
