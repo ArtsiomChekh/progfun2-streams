@@ -156,15 +156,25 @@ class BloxorzSuite extends munit.FunSuite:
         Set(Block(Pos(1, 2), Pos(1, 3)), Block(Pos(1, 1), Pos(1, 1)))),
 
         LazyList(
-        (Block(Pos(2, 1), Pos(3, 1)), List(Move.Down, Move.Left, Move.Up))))
+          (Block(Pos(2, 1), Pos(3, 1)), List(Move.Down, Move.Left, Move.Up))))
   }
 
-  test("Solver.from"){
+  test("Solver.from") {
     new Level1:
-      assertEquals(from(LazyList((startBlock, List())), Set(startBlock)),
-        LazyList((Block(Pos(1, 1), Pos(1, 1)), List(Move.Left, Move.Up)),
-        (Block(Pos(1, 2), Pos(1, 3)), List(Move.Down, Move.Left, Move.Up))
-      ))
+      val list = from(LazyList((startBlock, List())), Set(startBlock))
+
+      assertEquals(
+        list.take(1),
+
+        LazyList((Block(Pos(1, 1), Pos(1, 1)), List()))
+      )
+
+      assertEquals(
+        list.take(2),
+
+        LazyList((Block(Pos(1, 1), Pos(1, 1)), List()),
+          (Block(Pos(1, 2), Pos(1, 3)), List(Move.Right)))
+      )
   }
 
 
