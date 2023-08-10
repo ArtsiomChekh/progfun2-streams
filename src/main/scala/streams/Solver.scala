@@ -63,7 +63,15 @@ trait Solver extends GameDef:
    * construct the correctly sorted lazy list.
    */
   def from(initial: LazyList[(Block, List[Move])],
-           explored: Set[Block]): LazyList[(Block, List[Move])] = ???
+           explored: Set[Block]): LazyList[(Block, List[Move])] =
+    if initial.isEmpty then
+      LazyList.empty
+    else
+      val more = for {
+        (block, moves) <- initial
+        nextNeighbors <- newNeighborsOnly(neighborsWithHistory(block, moves), explored)
+      } yield nextNeighbors
+      initial #::: from(more, explored ++ more.map(_._1))
 
   /**
    * The lazy list of all paths that begin at the starting block.
