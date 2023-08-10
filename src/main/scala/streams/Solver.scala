@@ -28,7 +28,7 @@ trait Solver extends GameDef:
    * that are inside the terrain.
    */
   def neighborsWithHistory(b: Block, history: List[Move]): LazyList[(Block, List[Move])] =
-    b.legalNeighbors.map(x => (x._1, x._2 :: history)).to(LazyList)
+    b.legalNeighbors.map((block, move) => (block, move :: history)).to(LazyList)
 
   /**
    * This function returns the list of neighbors without the block
@@ -76,13 +76,15 @@ trait Solver extends GameDef:
   /**
    * The lazy list of all paths that begin at the starting block.
    */
-  lazy val pathsFromStart: LazyList[(Block, List[Move])] = ???
+  lazy val pathsFromStart: LazyList[(Block, List[Move])] =
+    from(LazyList((startBlock, List.empty)), Set(startBlock))
 
   /**
    * Returns a lazy list of all possible pairs of the goal block along
    * with the history how it was reached.
    */
-  lazy val pathsToGoal: LazyList[(Block, List[Move])] = ???
+  lazy val pathsToGoal: LazyList[(Block, List[Move])] =
+    pathsFromStart.filter((block, _) => done(block))
 
   /**
    * The (or one of the) shortest sequence(s) of moves to reach the
@@ -92,4 +94,8 @@ trait Solver extends GameDef:
    * the first move that the player should perform from the starting
    * position.
    */
-  lazy val solution: List[Move] = ???
+  lazy val solution: List[Move] =
+    if pathsToGoal.isEmpty then
+      List.empty
+    else
+      pathsToGoal.head._2.reverse

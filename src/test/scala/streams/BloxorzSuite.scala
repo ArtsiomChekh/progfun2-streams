@@ -177,6 +177,22 @@ class BloxorzSuite extends munit.FunSuite:
       )
   }
 
+  test("Solver.pathsFromStart") {
+    new Level1:
+      val list = pathsFromStart
+      assertEquals(
+        list.take(1),
+        LazyList((Block(Pos(1, 1), Pos(1, 1)), List())))
+  }
+
+  test("Solver.pathsToGoal") {
+    new Level1:
+      val list = pathsToGoal
+      assertEquals(
+        list.take(1),
+        LazyList((Block(Pos(4, 7), Pos(4, 7)), List(Move.Right, Move.Right, Move.Down, Move.Right, Move.Right, Move.Right, Move.Down))))
+  }
+
 
   import scala.concurrent.duration.*
 
