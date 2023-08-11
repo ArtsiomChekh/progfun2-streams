@@ -145,4 +145,4 @@ trait GameDef:
      * Returns `true` if the block is entirely inside the terrain.
      */
     def isLegal: Boolean =
-      terrain(b1) == terrain(b2)
+      terrain(b1) && terrain(b2)
