@@ -104,9 +104,12 @@ class BloxorzSuite extends munit.FunSuite:
   test("Block.isLegal") {
     new Level1:
       val b1 = Block(Pos(0, 0), Pos(0, 0))
-      val b2 = Block(Pos(0, 0), Pos(0, 3))
+      val b2 = Block(Pos(0, 1), Pos(0, 2))
+      val b3 = Block(Pos(0, 2), Pos(0, 3))
       assertTrue(b1.isLegal)
-      assertFalse(b2.isLegal)
+      assertTrue(b2.isLegal)
+      assertFalse(b3.isLegal)
+
   }
 
   test("Block.startBlock") {
@@ -190,7 +193,7 @@ class BloxorzSuite extends munit.FunSuite:
       val list = pathsToGoal
       assertEquals(
         list.take(1),
-        LazyList((Block(Pos(4, 7), Pos(4, 7)), List(Move.Right, Move.Right, Move.Down, Move.Right, Move.Right, Move.Right, Move.Down))))
+        LazyList((Block(Pos(4, 7), Pos(4, 7)), List(Move.Down, Move.Right, Move.Right, Move.Right, Move.Down, Move.Right, Move.Right))))
   }
 
 
